@@ -1,15 +1,17 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/home'
 import Product from './pages/prodcuts'
+import Add from './pages/add'
 
 function Routers() {
     return (
         <BrowserRouter>
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/product/:id" component={Product} />
-            </Switch>
+            <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route exact path="/product/:id" element={<Product />} />
+                <Route exact path="/add" element={<Add />} />
+            </Routes>
         </BrowserRouter>
     )
 }

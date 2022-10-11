@@ -1,4 +1,4 @@
-import './style.css'
+import './style.scoped.css'
 import React, { useState, useEffect } from 'react'
 import { Image, Button } from 'react-bootstrap'
 import { useParams, Link } from 'react-router-dom'

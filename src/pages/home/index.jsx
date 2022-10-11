@@ -1,7 +1,7 @@
-import './style.scss'
+import './style.scoped.scss'
 import React, { Component } from 'react'
 import axios from 'axios'
-import Navbar from '../../components/navbar/navabr'
+import Navbar from '../../components/header'
 import Cards from '../../components/cards/cards'
 import Carts from '../../components/carts/carts'
 
