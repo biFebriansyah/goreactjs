@@ -2,31 +2,7 @@ import './style.scoped.scss'
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart, faSignOutAlt, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
-
-const Carts = (props) => {
-    return (
-        <nav className="navbar navbar-light">
-            <div className="navbar-text ml-auto d-flex">
-                <button className="btn btn-sm btn-outline-success mr-2">
-                    <FontAwesomeIcon icon={faShoppingBag} />
-                    <span> products</span>
-                </button>
-                <div className="mr-2">
-                    <button type="button" className="btn btn-sm btn-success" onClick={() => props.show()}>
-                        <span className="badge badge-pill badge-light mr-2">{props.qty}</span>
-                        <span className="price" style={{ fontWeight: 'bold' }}>
-                            $ {props.total}
-                        </span>
-                    </button>
-                </div>
-                <button className="btn btn-sm btn-outline-secondary">
-                    <FontAwesomeIcon icon={faSignOutAlt} />
-                </button>
-            </div>
-        </nav>
-    )
-}
+import { faSignOutAlt, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 
 function Headers(props) {
     const { pathname } = useLocation()
@@ -55,7 +31,26 @@ function Headers(props) {
                         </div>
                     </>
                 ) : isAuth && pathname === '/' ? (
-                    <Carts show={props.show} qty={props.qty} total={props.total} />
+                    <nav className="navbar navbar-light">
+                        <div className="navbar-text ml-auto d-flex">
+                            <button className="btn btn-sm btn-outline-success mr-2">
+                                <FontAwesomeIcon icon={faShoppingBag} />
+                                <span> products</span>
+                            </button>
+                            <div className="mr-2">
+                                <button type="button" className="btn btn-sm btn-success" onClick={() => props.show()}>
+                                    <span className="badge badge-pill badge-light mr-2">{props.qty}</span>
+                                    <span className="price" style={{ fontWeight: 'bold' }}>
+                                        $ {props.total}
+                                    </span>
+                                </button>
+                            </div>
+                            <button className="btn btn-sm btn-outline-secondary">
+                                <span>{data.Username} </span>
+                                <FontAwesomeIcon icon={faSignOutAlt} />
+                            </button>
+                        </div>
+                    </nav>
                 ) : (
                     <div className="my_btn">
                         <Link to="/" className="cos_btn bg_false">
