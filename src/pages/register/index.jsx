@@ -6,17 +6,18 @@ import useApi from '../../helpers/useApi'
 
 function Signup() {
     const [PlaceHolder, setPlaceHolder] = useState({ Username: 'Username', Password: 'Password' })
-    const [Users, setUsers] = useState({ username: 'username', password: 'password' })
+    const [Users, setUsers] = useState({ username: 'username', password: 'password', role: 'users' })
 
     const refLogin = useRef(null)
     const refWarUser = useRef(null)
     const refWarPass = useRef(null)
 
-    const api = useApi()
     const navigate = useNavigate()
+    const api = useApi()
 
     const onChangeInput = (event) => {
         event.preventDefault()
+
         const data = { ...Users }
         data[event.target.name] = event.target.value
         setUsers(data)
@@ -48,14 +49,8 @@ function Signup() {
             url: '/users',
             data: Users
         })
-            .then((res) => {
-                console.log('🚀 ~ file: signup.jsx ~ line 49 ~ daftar ~ res', res)
-                navigate('/login')
-            })
-
-            .catch((err) => {
-                console.log('🚀 ~ file: signup.jsx ~ line 51 ~ daftar ~ err', err)
-            })
+            .then((res) => navigate('/login'))
+            .catch((err) => console.log(err))
     }
 
     return (

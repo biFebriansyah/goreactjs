@@ -1,12 +1,15 @@
 import './style.scoped.scss'
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from '../../store/reducer/users'
 import { Link, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 
 function Headers(props) {
+    const dispatch = useDispatch()
     const { pathname } = useLocation()
-    const isAuth = true
+    const { isAuth } = useSelector((state) => state.users)
     const data = { Username: 'ebiebi' }
 
     return (
@@ -45,7 +48,7 @@ function Headers(props) {
                                     </span>
                                 </button>
                             </div>
-                            <button className="btn btn-sm btn-outline-secondary">
+                            <button className="btn btn-sm btn-outline-secondary" onClick={() => dispatch(logout())}>
                                 <span>{data.Username} </span>
                                 <FontAwesomeIcon icon={faSignOutAlt} />
                             </button>

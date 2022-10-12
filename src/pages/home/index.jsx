@@ -1,16 +1,23 @@
 import './style.scoped.scss'
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { adduser } from '../../store/reducer/users'
 import axios from 'axios'
 import Navbar from '../../components/header'
 import Cards from '../../components/cards/cards'
 import Carts from '../../components/carts/carts'
+import useApi from '../../helpers/useApi'
 
 function Homes() {
     const [cartts, setCarts] = useState([])
+    const [usersData, setUsers] = useState([])
     const [prod, setProd] = useState([])
     const [total, setTotal] = useState(0)
     const [quantity, setQty] = useState(0)
     const [showCart, setShow] = useState(false)
+
+    const api = useApi()
+    const dispatch = useDispatch()
 
     const addCart = (data) => {
         let indexItem
@@ -76,6 +83,15 @@ function Homes() {
         }
     }
 
+    const getDataUser = async () => {
+        try {
+            const { data } = await api.requests('/users')
+            dispatch(adduser(data.data))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         countTotal()
         countQty()
@@ -83,6 +99,7 @@ function Homes() {
 
     useEffect(() => {
         getProds()
+        getDataUser()
     }, [])
 
     return (

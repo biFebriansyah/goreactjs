@@ -10,15 +10,14 @@ function Login() {
     const [PlaceHolder, setPlaceHolder] = useState({ Username: 'Username', Password: 'Password' })
     const [Users, setUsers] = useState({ username: 'username', password: 'password' })
 
-    const { isAuth } = useSelector((state) => state.users)
-
     const refLogin = useRef(null)
     const refWarUser = useRef(null)
     const refWarPass = useRef(null)
 
-    const api = useApi()
-    const dispatch = useDispatch() //untuk eksekusi action redux
+    const { isAuth } = useSelector((state) => state.users)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const api = useApi()
 
     useEffect(() => {
         if (isAuth) {
@@ -60,12 +59,10 @@ function Login() {
             data: Users
         })
             .then((res) => {
-                const { data } = res.data
-                dispatch(login(data.token))
+                const { token } = res.data.data
+                dispatch(login({ token }))
             })
-            .catch((err) => {
-                console.log('🚀 ~ file: signup.jsx ~ line 51 ~ daftar ~ err', err)
-            })
+            .catch((err) => console.log(err))
     }
 
     return (

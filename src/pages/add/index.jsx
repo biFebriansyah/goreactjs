@@ -1,6 +1,8 @@
 import style from './style.module.css'
 import React, { useState, useRef } from 'react'
 import Header from '../../components/header'
+import withAuth from '../../helpers/withAuth'
+import axios from 'axios'
 
 function Add() {
     const [data, setData] = useState({
@@ -25,6 +27,17 @@ function Add() {
         setData(tmpdata)
     }
 
+    const onChangeFile = (event) => {
+        event.preventDefault()
+
+        const file = event.target.files[0]
+        if (file) {
+            const tmpdata = { ...data }
+            tmpdata['image'] = file
+            setData(tmpdata)
+        }
+    }
+
     const inputOnFocus = (event) => {
         const newHolder = { ...PlaceHolder }
         if (event.target.name === 'username') {
@@ -46,7 +59,23 @@ function Add() {
     }
 
     const postData = () => {
-        console.log(data)
+        const formData = new FormData()
+        for (const key in data) {
+            formData.append(`${key}`, data[key])
+        }
+
+        axios({
+            method: 'POST',
+            url: 'https://goback-dua.herokuapp.com/product',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: formData
+        })
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     return (
@@ -71,6 +100,9 @@ function Add() {
                             <input type="text" onChange={onChangeInput} name="description" autoComplete="off" onFocus={inputOnFocus} onBlur={inputOnBlur} />
                             <span data-placeholder={PlaceHolder.desc} className="nor" ref={refWarPass} />
                         </div>
+                        <div className={style.inpform}>
+                            <input type="file" onChange={onChangeFile} name="description" autoComplete="off" onFocus={inputOnFocus} onBlur={inputOnBlur} />
+                        </div>
                         <button className={style.login_btn} defaultValue="Login" ref={refLogin} onClick={postData}>
                             <span className="text">SAVE</span>
                         </button>
@@ -81,4 +113,4 @@ function Add() {
     )
 }
 
-export default Add
+export default withAuth(Add)
